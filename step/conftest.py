@@ -9,11 +9,18 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from dotenv import load_dotenv
 from webdriver_manager.chrome import ChromeDriverManager
+import os
+import sys
+import pytest
+def pytest_configure(config):
+   project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+   os.environ['PYTHONPATH'] = project_root
+   sys.path.insert(0, project_root)  # 动态添加项目根目录到 sys.path
 
 
 @pytest.fixture(scope="session")
 def driver():
-   load_dotenv("config.env")
+   load_dotenv("../config.env")
    print("Start loading driver...")
 
    DRIVER_PATH = os.getenv("DRIVER_PATH")
